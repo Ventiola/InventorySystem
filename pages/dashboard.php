@@ -15,10 +15,9 @@ $totalStock = $conn->query("
 
 $recentLog = $conn->query("
     SELECT 
-        l.type,
-        p.name,
-        l.quantity,
-        l.created_at
+        l.product_id,
+        l.qty,
+        l.type
     FROM stock_log l
     JOIN products p ON p.id = l.product_id
     ORDER BY l.created_at DESC
@@ -27,12 +26,10 @@ $recentLog = $conn->query("
 ?>
 
 <main class="ml-64 p-6 pt-24">
-    
+
     <div class="mb-6">
         <h1 class="text-2xl font-bold">Dashboard</h1>
-        <p class="text-sm text-gray-500">
-            Ringkasan data sistem inventori
-        </p>
+
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -54,22 +51,22 @@ $recentLog = $conn->query("
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <a href="?page=products-create"
-           class="bg-blue-600 text-white rounded p-4 hover:bg-blue-700">
-            Add Product
+            class="bg-blue-600 text-white rounded p-4 hover:bg-blue-700">
+            List Product
         </a>
 
         <a href="?page=categories-create"
-           class="bg-green-600 text-white rounded p-4 hover:bg-green-700">
-            Add Category
+            class="bg-green-600 text-white rounded p-4 hover:bg-green-700">
+            List Category
         </a>
 
         <a href="?page=stock-in"
-           class="bg-indigo-600 text-white rounded p-4 hover:bg-indigo-700">
+            class="bg-indigo-600 text-white rounded p-4 hover:bg-indigo-700">
             Stock In
         </a>
 
         <a href="?page=stock-out"
-           class="bg-rose-600 text-white rounded p-4 hover:bg-rose-700">
+            class="bg-rose-600 text-white rounded p-4 hover:bg-rose-700">
             Stock Out
         </a>
     </div>
@@ -103,7 +100,7 @@ $recentLog = $conn->query("
                 <?php else: ?>
                     <tr>
                         <td colspan="4" class="text-center py-4 text-gray-500">
-                            No activity yet
+                            ...
                         </td>
                     </tr>
                 <?php endif; ?>

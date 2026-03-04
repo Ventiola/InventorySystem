@@ -9,7 +9,7 @@
             <li>
                 <a href="?page=dashboard"
                    class="block px-4 py-2 hover:bg-slate-700">
-                    📊 Dashboard
+                    Dashboard
                 </a>
             </li>
 
