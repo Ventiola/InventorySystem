@@ -22,14 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn->beginTransaction();
 
+        $invoiceNumber = 'IN-' . date('YmdHis');
+
         $stmt = $conn->prepare("
-            INSERT INTO stock_in (dates, supplier, note)
-            VALUES (:dates, :supplier, :note)
+            INSERT INTO stock_in (dates, invoice_number, supplier, note)
+            VALUES (:dates, :invoice_number, :supplier, :note)
             RETURNING id
         ");
 
         $stmt->execute([
             ':dates'  => $dates,
+            ':invoice_number' => $invoiceNumber,
             ':supplier' => $supplier,
             ':note'     => $note
         ]);
@@ -77,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         header("Location: ?page=stock-in");
         exit;
-
     } catch (Exception $e) {
         $conn->rollBack();
         die("Error: " . $e->getMessage());
@@ -111,13 +113,14 @@ $today = date('Y-m-d');
                     <input type="date" name="dates"
                         value="<?= $today ?>"
                         class="w-full border rounded px-3 py-2" required>
+
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Supplier</label>
                     <input type="text" name="supplier"
                         class="w-full border rounded px-3 py-2"
-                        placeholder="Nama Supplier" required>
+                        placeholder="" required>
                 </div>
 
                 <div>
@@ -143,11 +146,11 @@ $today = date('Y-m-d');
                 <div class="grid grid-cols-2 gap-4">
 
                     <div>
-                        <label class="block text-sm font-medium mb-1">Produk</label>
+                        <label class="block text-sm font-medium mb-1">Product</label>
                         <input list="productList"
                             name="product_id[]"
                             class="w-full border rounded px-3 py-2"
-                            placeholder="Ketik minimal 3 huruf..."
+                            placeholder="..."
                             required>
                     </div>
 
@@ -176,13 +179,13 @@ $today = date('Y-m-d');
 
             <button type="button"
                 onclick="addItem()"
-                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                + Tambah Form
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                + Add New Form
             </button>
 
             <button type="submit"
-                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Simpan Stock In
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Save Stock In
             </button>
 
         </div>
@@ -192,27 +195,27 @@ $today = date('Y-m-d');
 </main>
 
 <script>
-function addItem() {
-    const container = document.getElementById('itemsContainer');
-    const firstItem = document.querySelector('.itemRow');
-    const clone = firstItem.cloneNode(true);
+    function addItem() {
+        const container = document.getElementById('itemsContainer');
+        const firstItem = document.querySelector('.itemRow');
+        const clone = firstItem.cloneNode(true);
 
-    clone.querySelectorAll('input').forEach(input => {
-        input.value = '';
-    });
+        clone.querySelectorAll('input').forEach(input => {
+            input.value = '';
+        });
 
-    const removeBtn = clone.querySelector('.removeBtn');
-    removeBtn.classList.remove('hidden');
+        const removeBtn = clone.querySelector('.removeBtn');
+        removeBtn.classList.remove('hidden');
 
-    container.appendChild(clone);
-}
-
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('removeBtn')) {
-        const allItems = document.querySelectorAll('.itemRow');
-        if (allItems.length > 1) {
-            e.target.closest('.itemRow').remove();
-        }
+        container.appendChild(clone);
     }
-});
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('removeBtn')) {
+            const allItems = document.querySelectorAll('.itemRow');
+            if (allItems.length > 1) {
+                e.target.closest('.itemRow').remove();
+            }
+        }
+    });
 </script>

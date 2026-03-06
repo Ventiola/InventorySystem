@@ -123,8 +123,8 @@ $today = date('Y-m-d');
             <div class="grid grid-cols-3 gap-4">
 
                 <div>
-                    <label class="block text-sm font-medium mb-1">Dates</label>
-                    <input type="dates" name="dates"
+                    <label class="block text-sm font-medium mb-1">Date</label>
+                    <input type="date" name="dates"
                         value="<?= $today ?>"
                         class="w-full border rounded px-3 py-2" required>
                 </div>
@@ -133,13 +133,14 @@ $today = date('Y-m-d');
                     <label class="block text-sm font-medium mb-1">Destination</label>
                     <input type="text" name="destination"
                         class="w-full border rounded px-3 py-2"
-                        placeholder="Destination" required>
+                         required>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Notes</label>
-                    <input type="text" name="note"
+                    <input type="text" name="note" value="Sales"
                         class="w-full border rounded px-3 py-2">
+                        
                 </div>
 
             </div>
@@ -191,12 +192,12 @@ $today = date('Y-m-d');
 
             <button type="button"
                 onclick="addItem()"
-                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Add new Form
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                + Add New Form
             </button>
 
             <button type="submit"
-                class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                 Save Stock Out
            </button>
         </div>

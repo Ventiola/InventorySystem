@@ -12,11 +12,17 @@ $allowedPages = [
     'stock_out',
     'reports',
     'category-delete',
-    'delete_products'
+    'delete_products',
+    'print_report'
 ];
 
 if (!in_array($page, $allowedPages)) {
     $page = 'dashboard';
+}
+
+if ($page === 'print_report') {
+    require_once __DIR__ . '/../pages/reports/print_reports.php';
+    exit;
 }
 
 require_once __DIR__ . '/../layouts/header.php';
@@ -52,6 +58,9 @@ switch ($page) {
         break;
     case 'delete_products':
         require_once __DIR__ . '/../pages/products/delete_products.php';
+        break;
+        case 'print_report':
+        require_once __DIR__ . '/../pages/reports/print_reports.php';
         break;
 
     default:
