@@ -73,11 +73,15 @@ $stockOut = $stmtOut->fetchAll(PDO::FETCH_ASSOC);
             Filter
         </button>
 
-        <a href="?page=print_report&start=<?= $start ?>&end=<?= $end ?>"
+        <a href="?page=print_report&type=stock_in&start=<?= $start ?>&end=<?= $end ?>"
             class="bg-red-600 text-white px-4 py-2 rounded">
-            Print PDF
+            Print Stock In
         </a>
 
+        <a href="?page=print_report&type=stock_out&start=<?= $start ?>&end=<?= $end ?>"
+            class="bg-blue-600 text-white px-4 py-2 rounded">
+            Print Stock Out
+        </a>
     </form>
 
 
